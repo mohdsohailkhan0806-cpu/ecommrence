@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Immersive Ecommerce</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo"></div>
+           
+            <div class="search">
+                <input type="text" placeholder="Search products..." id="search-input">
+            </div>
+            <div class="filters">
+                <select id="category-filter">
+                    <option value="all">All Categories</option>
+                    <option value="electronics">Electronics</option>
+                    <option value="audio">Audio</option>
+                    <option value="wearables">Wearables</option>
+                    <option value="gaming">
+                         <img src="https://m.media-amazon.com/images/I/71Ka2P5Do8L.jpg" alt="" height="50" width="50">Gaming</option>
+                    <option value="computers">Computers</option>
+                    <option value="footwear">Footwear</option>
+                </select>
+                <select id="sort-filter">
+                    <option value="default">Sort By</option>
+                    <option value="price-low">Price: Low to High</option>
+                    <option value="price-high">Price: High to Low</option>
+                    <option value="name">Name: A-Z</option>
+                </select>
+            </div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="#" id="cart-link">🛒 Cart (<span id="cart-count">0</span>)</a></li>
+                <li id="auth-buttons">
+                    <a href="#" id="login-btn">Login</a>
+                    <a href="#" id="register-btn">Register</a>
+                </li>
+                <li id="user-info" style="display: none;">
+                    <span id="user-name"></span>
+                    <a href="#" id="profile-btn">Profile</a>
+                    <a href="#" id="orders-btn">My Orders</a>
+                    <a href="#" id="wishlist-btn">Wishlist</a>
+                    <a href="#" id="logout-btn">Logout</a>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <section id="hero">
+            <h1>Welcome to Immersive Shopping</h1>
+            <p>Experience the future of online retail with immersive designs and seamless interactions.</p>
+        </section>
+
+        <section class="highlights">
+            <div class="highlight-card">
+                <h3>⚡ Fast Delivery</h3>
+                <p>Same-day dispatch on your favorite gadgets and accessories.</p>
+            </div>
+            <div class="highlight-card">
+                <h3>🛡️ Secure Checkout</h3>
+                <p>Pay with card, wallet, cash on delivery, or UPI with confidence.</p>
+            </div>
+            <div class="highlight-card">
+                <h3>💬 24/7 Support</h3>
+                <p>Get quick help with orders, returns, and product guidance.</p>
+            </div>
+        </section>
+
+        <section id="products">
+            <h2>Our Products</h2>
+            <div id="products-count" class="products-count"></div>
+            <div class="product-grid" id="product-grid">
+                <!-- Products will be dynamically loaded -->
+            </div>
+        </section>
+
+        <section id="about">
+            <h2>About Us</h2>
+            <p>We provide an immersive shopping experience like no other.</p>
+        </section>
+
+        <section id="contact">
+            <h2>Contact</h2>
+            <p>Get in touch for more information.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 Immersive Ecommerce. All rights reserved.</p>
+    </footer>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-cart">&times;</span>
+            <h2>Your Cart</h2>
+            <div id="cart-items"></div>
+            <p>Total: ₹<span id="cart-total">0</span></p>
+            <button class="btn checkout-btn" id="checkout-btn">Checkout</button>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-login">&times;</span>
+            <h2>Login</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="login-email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" id="login-password" required>
+                </div>
+                <button type="submit" class="btn">Login</button>
+            </form>
+            <p>Don't have an account? <a href="#" id="switch-to-register">Register</a></p>
+        </div>
+    </div>
+
+        <!-- Payment Method Modal -->
+        <div id="payment-modal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="close-payment">&times;</span>
+                <h2>Select Payment Method</h2>
+                <form id="payment-form">
+                    <div>
+                        <label><input type="radio" name="payment-method" value="stripe" checked> Card (Stripe)</label>
+                    </div>
+                    <div>
+                        <label><input type="radio" name="payment-method" value="razorpay"> Razorpay (UPI / Wallets)</label>
+                    </div>
+                    <div>
+                        <label><input type="radio" name="payment-method" value="paypal"> PayPal</label>
+                    </div>
+                    <div>
+                        <label><input type="radio" name="payment-method" value="gpay"> Google Pay (UPI)</label>
+                    </div>
+                    <div>
+                        <label><input type="radio" name="payment-method" value="phonepe"> PhonePe (UPI)</label>
+                    </div>
+                    <div>
+                        <label><input type="radio" name="payment-method" value="cod"> Cash on Delivery</label>
+                    </div>
+                    <div style="margin-top:16px;display:flex;gap:8px;">
+                        <button type="submit" class="btn">Pay</button>
+                        <button type="button" class="btn cancel-btn" id="cancel-payment">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+    <!-- Register Modal -->
+    <div id="register-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-register">&times;</span>
+            <h2>Register</h2>
+            <form id="register-form">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" id="register-name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="register-email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password:</label>
+                    <input type="password" id="register-password" required>
+                </div>
+                <button type="submit" class="btn">Register</button>
+            </form>
+            <p>Already have an account? <a href="#" id="switch-to-login">Login</a></p>
+        </div>
+    </div>
+
+    <!-- Orders Modal -->
+    <div id="orders-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-orders">&times;</span>
+            <h2>My Orders</h2>
+            <div id="orders-list"></div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div id="profile-modal" class="modal">
+        <div class="modal-content profile-modal">
+            <span class="close" id="close-profile">&times;</span>
+            <h2>My Profile</h2>
+            <div class="profile-tabs">
+                <button class="tab-btn active" data-tab="personal">Personal Info</button>
+                <button class="tab-btn" data-tab="addresses">Addresses</button>
+                <button class="tab-btn" data-tab="security">Security</button>
+            </div>
+            <div class="tab-content" id="personal-tab">
+                <form id="profile-form">
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" id="profile-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email:</label>
+                        <input type="email" id="profile-email" readonly>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone:</label>
+                        <input type="tel" id="profile-phone" placeholder="+91 9876543210">
+                    </div>
+                    <button type="submit" class="btn">Update Profile</button>
+                </form>
+            </div>
+            <div class="tab-content" id="addresses-tab" style="display: none;">
+                <div id="addresses-list"></div>
+                <button class="btn" id="add-address-btn">+ Add New Address</button>
+                <form id="address-form" style="display: none; margin-top: 20px;">
+                    <div class="form-group">
+                        <label>Full Name:</label>
+                        <input type="text" id="address-name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Phone:</label>
+                        <input type="tel" id="address-phone" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Address Line 1:</label>
+                        <input type="text" id="address-line1" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Address Line 2:</label>
+                        <input type="text" id="address-line2">
+                    </div>
+                    <div class="form-group">
+                        <label>City:</label>
+                        <input type="text" id="address-city" required>
+                    </div>
+                    <div class="form-group">
+                        <label>State:</label>
+                        <input type="text" id="address-state" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Pincode:</label>
+                        <input type="text" id="address-pincode" required>
+                    </div>
+                    <div class="form-group">
+                        <label>
+                            <input type="checkbox" id="address-default"> Set as default address
+                        </label>
+                    </div>
+                    <button type="submit" class="btn">Save Address</button>
+                    <button type="button" class="btn cancel-btn" id="cancel-address-btn">Cancel</button>
+                </form>
+            </div>
+            <div class="tab-content" id="security-tab" style="display: none;">
+                <form id="password-form">
+                    <div class="form-group">
+                        <label>Current Password:</label>
+                        <input type="password" id="current-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label>New Password:</label>
+                        <input type="password" id="new-password" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm New Password:</label>
+                        <input type="password" id="confirm-password" required>
+                    </div>
+                    <button type="submit" class="btn">Change Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Wishlist Modal -->
+    <div id="wishlist-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" id="close-wishlist">&times;</span>
+            <h2>My Wishlist</h2>
+            <div id="wishlist-items"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
